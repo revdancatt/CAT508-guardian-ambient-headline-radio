@@ -19,3 +19,8 @@ Next
 2. add the headline being spoken
 3. add the music
 4. stuff
+
+LOLiPad
+=======
+
+So doesn't work on the iPad yet
