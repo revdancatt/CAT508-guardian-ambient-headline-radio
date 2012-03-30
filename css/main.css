@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+}
+
+img#holder {
+    width: 140px;
+    height: 84px;
+    background: #999;
+    display: none;
+}
+
+#sourceCanvas {
+    display: none;
+}
+
+#targetCanvas {
+    width: 100%;
+    height: 100%;
+}
