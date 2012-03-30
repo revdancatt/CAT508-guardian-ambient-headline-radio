@@ -55,8 +55,8 @@ control = {
               };
 
               //  mark that we now have it and push it onto the radio queue
-              control.alreadyHave[thisStory.api] = true;
-              control.alreadyHaveList.push(thisStory.api);
+              control.alreadyHave[thisStory.apiUrl] = true;
+              control.alreadyHaveList.push(thisStory.apiUrl);
               control.radioQueue.push(newStory);
               break;
             }
