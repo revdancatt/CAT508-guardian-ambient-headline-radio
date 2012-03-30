@@ -52,8 +52,8 @@ aesthetic = {
       //  resize the canvas
       $('#targetCanvas').remove();
       $('#targetHolder').append($('<canvas>').attr({'id': 'targetCanvas'}));
-      $('#targetCanvas').attr({'width': $('#targetHolder').width(), 'height': $('#targetHolder').height()});
-      $('#targetCanvas').css({'width': $('#targetHolder').width() + 'px', 'height': $('#targetHolder').height() + 'px'});
+      $('#targetCanvas').attr({'width': $(window).innerWidth(), 'height': $(window).innerHeight()});
+      $('#targetCanvas').css({'width': $(window).innerWidth() + 'px', 'height': $(window).innerHeight() + 'px'});
       
       var ct=$('#targetCanvas')[0];
       var ctxt=ct.getContext("2d");

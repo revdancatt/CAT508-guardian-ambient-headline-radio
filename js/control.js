@@ -12,6 +12,7 @@ control = {
     control.getLatestHeadline();
     setInterval(function() {control.getLatestHeadline();}, 60000);
 
+    $(document).bind('touchstart', function(e) {e.preventDefault();});
     $(window).resize(function() {
       control.windowResize = setTimeout( function() { aesthetic.renderTiles(); }, 500);
     });
