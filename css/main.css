@@ -2,18 +2,27 @@ body {
     margin: 0;
 }
 
+#hiddenStuff {
+    display: none;
+}
+
+#targetHolder {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 img#holder {
     width: 140px;
     height: 84px;
     background: #999;
-    display: none;
-}
-
-#sourceCanvas {
-    display: none;
 }
 
 #targetCanvas {
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }

@@ -12,12 +12,16 @@
   </head>
   <body>
 
-    <canvas id="sourceCanvas" width="140" height="84"></canvas>
-    <canvas id="targetCanvas" width="1400" height="840"></canvas>
+    <div id="targetHolder">
+    </div>
+    
+    <div id="hiddenStuff">
+        <canvas id="sourceCanvas" width="140" height="84"></canvas>
+    </div>
 
     <script src="js/jquery.min.js"></script> 
-    <script src="js/control.js?v=0.1"></script>
-    <script src="js/aesthetic.js?v=0.1"></script>
+    <script src="js/control.js?v=0.2"></script>
+    <script src="js/aesthetic.js?v=0.2"></script>
     <script>
         $(document).ready(function() {
             control.init();

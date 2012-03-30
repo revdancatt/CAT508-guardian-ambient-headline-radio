@@ -12,7 +12,7 @@ aesthetic = {
 
     //  remove an old image
     $('img#holder').remove();
-    $('body').append($('<img>').attr('id', 'holder'));
+    $('#hiddenStuff').append($('<img>').attr('id', 'holder'));
     $('img#holder').load(function() {aesthetic.copyToCanvas();});
 
     //  Go and get the latest headline...
@@ -49,10 +49,11 @@ aesthetic = {
 
     var imageData = aesthetic.imageData;
 
-      //  resize the canvas   
+      //  resize the canvas
       $('#targetCanvas').remove();
-      $('body').append($('<canvas>').attr({'id': 'targetCanvas'}));
-      $('#targetCanvas').attr({'width': $(document).width(), 'height': $(document).height()});
+      $('#targetHolder').append($('<canvas>').attr({'id': 'targetCanvas'}));
+      $('#targetCanvas').attr({'width': $('#targetHolder').width(), 'height': $('#targetHolder').height()});
+      $('#targetCanvas').css({'width': $('#targetHolder').width() + 'px', 'height': $('#targetHolder').height() + 'px'});
       
       var ct=$('#targetCanvas')[0];
       var ctxt=ct.getContext("2d");
