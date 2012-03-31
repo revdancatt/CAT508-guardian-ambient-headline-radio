@@ -181,8 +181,19 @@ aesthetic = {
           ctxt.closePath();
           ctxt.fill();
 
-        }        
+        }
       }
+    }
+
+    //  If I *were* to use Pixastic, this is where I'd do it
+    try {
+      Pixastic.process(ct, "glow", {amount:1.0,radius:3.0});
+      ct=$('#targetCanvas')[0];
+      Pixastic.process(ct, "noise", {mono:true,amount:0.5,strength:0.05});
+      //ct=$('#targetCanvas')[0];
+      //Pixastic.process(ct, "blurfast", {amount:0.1});
+    } catch(er) {
+      // Ignore
     }
 
     control.finishBroadcast();
