@@ -9,13 +9,16 @@ control = {
   
   init: function() {
 
-    control.getLatestHeadline();
-    setInterval(function() {control.getLatestHeadline();}, 60000);
+    //  Set the tiles across size, directly because I'm a hack
+    aesthetic.tilesAcross = 20;
 
     $(document).bind('touchstart', function(e) {e.preventDefault();});
     $(window).resize(function() {
       control.windowResize = setTimeout( function() { aesthetic.renderTiles(); }, 500);
     });
+
+    control.getLatestHeadline();
+    setInterval(function() {control.getLatestHeadline();}, 60000);
 
   },
 
