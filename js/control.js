@@ -87,6 +87,10 @@ control = {
     //  otherwise mark that we are broadcasting now, even though we actually have a few things to do before then
     control.broadcasting = true;
 
+    //  set the headline and link
+    var hl = $('<a>').attr('href', control.radioQueue[0].webUrl).html(control.radioQueue[0].headline);
+    $('#headline').empty().append(hl);
+    
     //  first we have to load the image
     aesthetic.loadimage();
 

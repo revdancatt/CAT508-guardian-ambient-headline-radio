@@ -35,3 +35,18 @@ img#holder {
     left: 0;
     display: none;
 }
+
+#headline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+    padding: 2px 4px;
+    font-size: 10px;
+}
+
+#headline a {
+    text-decoration: none;
+    color: black;
+}
