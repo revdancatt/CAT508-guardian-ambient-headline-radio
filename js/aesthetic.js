@@ -33,7 +33,7 @@ aesthetic = {
     utils.log('image loaded');
     var c=$('#sourceCanvas')[0];
     var ctx=c.getContext("2d");
-    ctx.drawImage($("img#holder")[0],0,0);
+    ctx.drawImage($("img#holder")[0], 0, 0);
 
     //  grab the source image data (so we can pull the pixels)
     //  and pop it into the aesthetic object
@@ -46,7 +46,9 @@ aesthetic = {
       across: aesthetic.tilesAcross,
       down: null,
       width: null,
-      height: null
+      height: null,
+      imgWidth: $('img#holder').width(),
+      imgHeight: $('img#holder').height()
     };
 
     //  So, as we want the source tiles to be as square as possible we need to work out how many pixels wide,
@@ -101,6 +103,7 @@ aesthetic = {
     //  now I'm going to draw lines over the diagionals, just to move them
     //  away from having a 00 value due to aliasing. It's not perfect, but it'll
     //  do for the moment
+    /*
     tmx.strokeStyle="rgb(255,255,255)";
     tmx.beginPath();
     tmx.moveTo(0, 0); tmx.lineTo(tileObj.width, tileObj.height);
@@ -108,6 +111,7 @@ aesthetic = {
     tmx.beginPath();
     tmx.moveTo(tileObj.width, 0); tmx.lineTo(0, tileObj.height);
     tmx.stroke();
+    */
 
     //  Ok, now we have that draw out let's grab the image data out and then
     //  work out which pixel is top, left, right or bottom
@@ -121,9 +125,9 @@ aesthetic = {
       a: null
     };
 
-    for (var x = 0; x < tileObj.height; x++) {
+    for (var x = 0; x <= tileObj.height; x++) {
       tileMap[x] = [];
-      for (var y = 0; y < tileObj.width; y++) {
+      for (var y = 0; y <= tileObj.width; y++) {
         pxlObj.r = mapData.data[((y*tileObj.width)+x)*4+0];
         pxlObj.g = mapData.data[((y*tileObj.width)+x)*4+1];
         pxlObj.b = mapData.data[((y*tileObj.width)+x)*4+2];
@@ -185,10 +189,10 @@ aesthetic = {
         //  To start we we need to know how many rows of pixels we are down, if the source image was
         //  140 pixels wide, and tileY = 1 (i.e. the 2nd tile row down), we would need 7 rows of 140 pixels
         //  to be our initial offset. The full width of pixels is tiles across * tile width.
-        tilePixel = (tileY * aesthetic.tileObj.height * aesthetic.tileObj.across * aesthetic.tileObj.width);
+        tilePixel = (Math.floor(tileY * aesthetic.tileObj.imgHeight / aesthetic.tileObj.down) * aesthetic.tileObj.imgWidth);
 
         //  Then we need to move a number of pixels in, based on the tileX positon
-        tilePixel += tileX * aesthetic.tileObj.width;
+        tilePixel += Math.floor(tileX * aesthetic.tileObj.imgWidth / aesthetic.tileObj.across);
 
         //  Once we know that we have the pixel offset position of the top left pixel of the tile we are
         //  currently on
@@ -201,7 +205,7 @@ aesthetic = {
           for (var x = 0; x < aesthetic.tileObj.width; x++) {
 
             //  Now we need to move down another y total rolls
-            sourcePixel = tilePixel + (y * aesthetic.tileObj.across * aesthetic.tileObj.width);
+            sourcePixel = tilePixel + (y * aesthetic.tileObj.imgWidth);
             //  and finally the last few pixels across
             sourcePixel += x;
 
