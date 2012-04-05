@@ -53,9 +53,9 @@ aesthetic = {
 
     //  So, as we want the source tiles to be as square as possible we need to work out how many pixels wide,
     //  and then how many of those we can fit down (rounding up)
-    tileObj.width = Math.floor(tileObj.width/tileObj.across);
-    tileObj.down = Math.ceil(tileObj.height/tileObj.width);
-    tileObj.height = Math.floor(tileObj.height/tileObj.down);
+    tileObj.width = Math.floor(tileObj.imgWidth/tileObj.across);
+    tileObj.down = Math.ceil(tileObj.imgHeight/tileObj.width);
+    tileObj.height = Math.floor(tileObj.imgHeight/tileObj.down);
 
     //  Because maths is hard, and I don't want to have to work out which top, left, right, bottom quarter a pixel
     //  falls in, because it's late and I'm tired, instead I'm just going to draw an image with the 4 quarters
