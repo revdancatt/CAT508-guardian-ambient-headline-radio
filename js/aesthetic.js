@@ -37,7 +37,7 @@ aesthetic = {
 
     //  grab the source image data (so we can pull the pixels)
     //  and pop it into the aesthetic object
-    var imageData = ctx.getImageData(0, 0, 140, 84);
+    var imageData = ctx.getImageData(0, 0, $('img#holder').width(), $('img#holder').height());
     aesthetic.imageData = imageData;
   
     //  right then, this may get messy, I want to divide the image up pretty well, about 20 tiles across seems to be
@@ -53,9 +53,9 @@ aesthetic = {
 
     //  So, as we want the source tiles to be as square as possible we need to work out how many pixels wide,
     //  and then how many of those we can fit down (rounding up)
-    tileObj.width = Math.floor($('img#holder').width()/tileObj.across);
-    tileObj.down = Math.ceil($('img#holder').height()/tileObj.width);
-    tileObj.height = Math.floor($('img#holder').height()/tileObj.down);
+    tileObj.width = Math.floor(tileObj.width/tileObj.across);
+    tileObj.down = Math.ceil(tileObj.height/tileObj.width);
+    tileObj.height = Math.floor(tileObj.height/tileObj.down);
 
     //  Because maths is hard, and I don't want to have to work out which top, left, right, bottom quarter a pixel
     //  falls in, because it's late and I'm tired, instead I'm just going to draw an image with the 4 quarters
@@ -125,9 +125,9 @@ aesthetic = {
       a: null
     };
 
-    for (var x = 0; x <= tileObj.height; x++) {
+    for (var x = 0; x <= tileObj.width; x++) {
       tileMap[x] = [];
-      for (var y = 0; y <= tileObj.width; y++) {
+      for (var y = 0; y <= tileObj.height; y++) {
         pxlObj.r = mapData.data[((y*tileObj.width)+x)*4+0];
         pxlObj.g = mapData.data[((y*tileObj.width)+x)*4+1];
         pxlObj.b = mapData.data[((y*tileObj.width)+x)*4+2];
