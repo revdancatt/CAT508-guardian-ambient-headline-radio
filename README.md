@@ -5,6 +5,8 @@ An attempt to make javascript play ambient music and speak the latest Guardian h
 
 Only tested in Chrome (obviously)
 
+Running here: revdancatt.github.com/GuardianAmbientHeadlineRadio
+
 But
 ---
 
@@ -14,10 +16,15 @@ You can read notes about the image stuff here: http://revdancatt.com/2012/03/31/
 
 This pulls the latest stories from the Guardian, finds one we haven't seen before that has a thumbnail, loads in the thumbnail to a hidden canvas object and then does some stupid maths to work out all the triangle stuff.
 
+Done
+----
+
+1. Add tiny headline at the bottom just to aplease people who wanted to be able to click thru from the image to the story
+2. Added first pass at the text-to-speech
+
 Next
 ----
 
 1. add the headline
-2. add the headline being spoken
-3. add the music
-4. stuff
+2. add the music
+3. stuff
