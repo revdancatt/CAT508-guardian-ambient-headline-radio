@@ -116,8 +116,6 @@ control = {
     var hl = $('<a>').attr('href', control.radioQueue[0].webUrl).html(control.radioQueue[0].headline);
     $('#headline').empty().append(hl);
     
-    //  say is, as a test
-    speak(control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
 
     //  first we have to load the image
     aesthetic.loadimage();
@@ -127,6 +125,7 @@ control = {
 
     //  TODO: Once the music has had a chance to lower the volumn we queue up the
     //  text-to-speech part
+    speak(control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
 
     //  TODO: although we do this somewhere else, once the text-to-speach has finished
     //  then we raise the music back up, and say that we've finished broadcasting so
