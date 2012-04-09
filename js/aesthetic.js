@@ -5,6 +5,12 @@ aesthetic = {
   tileObj: null,
   tilesAcross: 20,
 
+
+  //  This function loads in the thumbnail image, sadly because the Guardian doesn't have CORS
+  //  going on we need to do a server proxy kind of trick to allow the canvas object to have
+  //  access to the data. In this case we tell a remote service to convert the image into BASE64
+  //  once we have that back we can load the BASE64 into an image, and as far as the security model
+  //  is concerned the image now comes from the same domain and we can raid its pixels!
   loadimage: function() {
 
     //  get the story we are about to broadcase
@@ -13,35 +19,60 @@ aesthetic = {
     //  get the image URL
     var thumb = story.thumbnail;
 
-    //  remove an old image
+    //  remove an old image, just incase I've somehow missed removing it in the
+    //  clean-up from last time (I shouldn't, but goodness knows what I'll do in the
+    //  future that may involve skipping chunks of code when I hit errors)
     $('img#holder').remove();
     $('#hiddenStuff').append($('<img>').attr('id', 'holder'));
+
+    //  add the load event, so when the BASE64 comes back from the server
+    //  the next function will kick in.
     $('img#holder').load(function() {aesthetic.copyToCanvas();});
 
-    //  Go and get the latest headline...
+    //  Do the fetch the image from the remote server as BASE64 dance.
+    //  the remote server is set up to prepend the Guardian URL onto the
+    //  thumbnail value so it can't just be used to load in images from
+    //  wherever anyone fancies :)
     $.getJSON("http://gu-tools-v3.appspot.com/img_to_json?img=" + thumb + "&callback=?",
+      
       //  TODO: add error checking to this response
       function(json) {
+        //  We have the data back (I assume anyway, hah get me!)
+        //  shove it into the source.
         $('img#holder').attr('src', json.data);
       }
     );
 
   },
 
+
+  //  Now the image is loaded we need to do a bunch of stuff.
+  //  It needs to be converted to a canvas object and then we'll work
+  //  out how to break it down into as close to square tiles as we can get
+  //
+  //  Then once we know the size of a single 'tile' I'm going to do something
+  //  crazy involving making another canvas the same size, dividing it along the
+  //  diagonals and shoving the pixels in each triangle created by the diagonals
+  //  into a 2D array, so later on I can quickly work out of a pixel within an
+  //  area is in the top, left, right or bottom quarter. (If this was done with
+  //  square subdivisions instead of diagonal triangles it'd be so much easier)
   copyToCanvas: function() {
 
-    utils.log('image loaded');
+
+    //  do the canvas dance to so we can grab the data.
     var c=$('#sourceCanvas')[0];
     var ctx=c.getContext("2d");
     ctx.drawImage($("img#holder")[0], 0, 0);
 
+
     //  grab the source image data (so we can pull the pixels)
-    //  and pop it into the aesthetic object
+    //  and pop it into the aesthetic object so we can get to it later
     var imageData = ctx.getImageData(0, 0, $('img#holder').width(), $('img#holder').height());
     aesthetic.imageData = imageData;
   
-    //  right then, this may get messy, I want to divide the image up pretty well, about 20 tiles across seems to be
-    //  a good value, so lets kick off with that
+
+    //  right then, this may get messy, but I'm going to keep all the numbers I need in this object
+    //  including the original width & height.
     var tileObj = {
       across: aesthetic.tilesAcross,
       down: null,
@@ -51,11 +82,14 @@ aesthetic = {
       imgHeight: $('img#holder').height()
     };
 
+
     //  So, as we want the source tiles to be as square as possible we need to work out how many pixels wide,
     //  and then how many of those we can fit down (rounding up)
+    //  AGGGH MATHS!
     tileObj.width = Math.floor(tileObj.imgWidth/tileObj.across);
     tileObj.down = Math.ceil(tileObj.imgHeight/tileObj.width);
     tileObj.height = Math.floor(tileObj.imgHeight/tileObj.down);
+
 
     //  Because maths is hard, and I don't want to have to work out which top, left, right, bottom quarter a pixel
     //  falls in, because it's late and I'm tired, instead I'm just going to draw an image with the 4 quarters
@@ -63,12 +97,12 @@ aesthetic = {
     //  grabbing the colours back out, and stuffing the results into an array
     //
     //  This all makes perfect sense!!
-
     $('#tileMap').remove();
     $('#hiddenStuff').append($('<canvas>').attr({'id': 'tileMap'}));
     $('#tileMap').attr({'width': tileObj.width, 'height': tileObj.height});
     $('#tileMap').css({'width': tileObj.width + 'px', 'height': tileObj.height + 'px'});
     
+    //  grab the data
     var tm=$('#tileMap')[0];
     var tmx=tm.getContext("2d");
 
@@ -100,19 +134,6 @@ aesthetic = {
     tmx.closePath();
     tmx.fill();
 
-    //  now I'm going to draw lines over the diagionals, just to move them
-    //  away from having a 00 value due to aliasing. It's not perfect, but it'll
-    //  do for the moment
-    /*
-    tmx.strokeStyle="rgb(255,255,255)";
-    tmx.beginPath();
-    tmx.moveTo(0, 0); tmx.lineTo(tileObj.width, tileObj.height);
-    tmx.stroke();
-    tmx.beginPath();
-    tmx.moveTo(tileObj.width, 0); tmx.lineTo(0, tileObj.height);
-    tmx.stroke();
-    */
-
     //  Ok, now we have that draw out let's grab the image data out and then
     //  work out which pixel is top, left, right or bottom
     var mapData = tmx.getImageData(0, 0, tileObj.width, tileObj.height);
@@ -141,31 +162,40 @@ aesthetic = {
       }
     }
 
+    //  Right, we now have the measurements for dividing up the image
+    //  and a "map" of where the offset positions for the pixels are
     aesthetic.tileObj = tileObj;
     aesthetic.tileMap = tileMap;
 
+    //  Now we can render tiles
+    //  This is broken out so if we resize the window we don't need to do all the
+    //  above calculations again we can just run the below function.
     aesthetic.renderTiles();
 
   },
 
+  
+  //  This code steps through the original image tiles sizes at a time.
+  //  i.e. if the image was 100px * 100px and the tile was 10px across
+  //  then we'd obviously break the image up into 100 10x10 tiles.
   renderTiles: function() {
 
-
-
-    //  To do this we are dividing the source image into a grid of 7x7 squares, we'll then average the
-    //  top, bottom, left & right quarters and work out which quarter is closest to its adjacent ones
-    //  then we'll take the average between those two quarters and fill in the diagonal half with them
-    //  and same for the other half, and this render the image in triangles
+    
+    //  Go grab the source data that we tucked away earlier
     var imageData = aesthetic.imageData;
 
-    //  resize the canvas
+
+    //  remove the old target canvas and drop in a new one at the full screen size
     $('#targetCanvas').remove();
     $('#targetHolder').append($('<canvas>').attr({'id': 'targetCanvas'}));
     $('#targetCanvas').attr({'width': $(window).innerWidth(), 'height': $(window).innerHeight()});
     $('#targetCanvas').css({'width': $(window).innerWidth() + 'px', 'height': $(window).innerHeight() + 'px'});
     
+
+    //  get access to the raw data so we can draw on the canvas
     var ct=$('#targetCanvas')[0];
     var ctxt=ct.getContext("2d");
+
 
     //  Ok, now the new way of doing the tile thing around here, first we're going to loop thru the source image
     //  in tile sized chunks, and then when we're looking at each tile loop through the pixels in each one
@@ -175,6 +205,7 @@ aesthetic = {
     var tilePixel = null;
     var sourcePixel = null;
     var qa = ['top', 'left', 'right', 'bottom'];
+
 
     //  take big steps through the source image, one tile area at a time
     for (var tileY = 0; tileY < aesthetic.tileObj.down; tileY++) {
@@ -196,16 +227,15 @@ aesthetic = {
 
         //  Once we know that we have the pixel offset position of the top left pixel of the tile we are
         //  currently on
-
         //  NOTE, we still need to multiply up by 4 because there are 4 values r, b, g & a per pixel in the
         //  image data.
-
-        //  step through all the pixels
+        //  Atep through all the pixels
         for (var y = 0; y < aesthetic.tileObj.height; y++) {
           for (var x = 0; x < aesthetic.tileObj.width; x++) {
 
-            //  Now we need to move down another y total rolls
+            //  Now we need to move down another y total rows
             sourcePixel = tilePixel + (y * aesthetic.tileObj.imgWidth);
+
             //  and finally the last few pixels across
             sourcePixel += x;
 
@@ -237,6 +267,8 @@ aesthetic = {
         var bottomleft = (Math.abs(counter.bottom.r-counter.left.r) + Math.abs(counter.bottom.g-counter.left.g) + Math.abs(counter.bottom.b-counter.left.b))/3;
         var bottomright = (Math.abs(counter.bottom.r-counter.right.r) + Math.abs(counter.bottom.g-counter.right.g) + Math.abs(counter.bottom.b-counter.right.b))/3;
 
+        //  because I'm going to be using these values a lot for drawing the end result and they're
+        //  a bit boggling I'm just going to work them out here.
         var targetCorners = {
           top: Math.floor(tileY * $(window).innerHeight() / aesthetic.tileObj.down),
           bottom: Math.floor((tileY+1) * $(window).innerHeight() / aesthetic.tileObj.down) + 1,
@@ -244,6 +276,9 @@ aesthetic = {
           right: Math.floor((tileX+1) * $(window).innerWidth() / aesthetic.tileObj.across) + 1
         };
 
+        //  Now if the difference between the top & left quarters is lower than all the others
+        //  or the bottom and right, then we know we are going to slit the diagonal that way
+        //  i.e. joining the top-left quarters and the bottom-right quarters
         if ((topleft < topright && topleft < bottomleft && topleft < bottomright) || (bottomright < topleft && bottomright < topright && bottomright < bottomleft)) {
           var tl = { 'r': parseInt((counter.top.r + counter.left.r)/2, 10), 'g': parseInt((counter.top.g + counter.left.g)/2, 10), 'b': parseInt((counter.top.b + counter.left.b)/2, 10) };
           var br = { 'r': parseInt((counter.bottom.r + counter.right.r)/2, 10), 'g': parseInt((counter.bottom.g + counter.right.g)/2, 10), 'b': parseInt((counter.bottom.b + counter.right.b)/2, 10) };
@@ -278,6 +313,8 @@ aesthetic = {
           var tr = { 'r': parseInt((counter.top.r + counter.right.r)/2, 10), 'g': parseInt((counter.top.g + counter.right.g)/2, 10), 'b': parseInt((counter.top.b + counter.right.b)/2, 10) };
           var bl = { 'r': parseInt((counter.bottom.r + counter.left.r)/2, 10), 'g': parseInt((counter.bottom.g + counter.left.g)/2, 10), 'b': parseInt((counter.bottom.b + counter.left.b)/2, 10) };
 
+          //  same as above, we are going to "over-print" the triangle so we don't get a small
+          //  gap between the two sides.
           ctxt.fillStyle="rgb(" + tr.r + "," + tr.g + "," + tr.b + ")";
           ctxt.beginPath();
           ctxt.moveTo(targetCorners.left, targetCorners.top+1);
@@ -313,8 +350,6 @@ aesthetic = {
     } catch(er) {
       // Ignore
     }
-
-    control.finishBroadcast();
 
   },
 
