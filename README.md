@@ -5,7 +5,7 @@ An attempt to make javascript play ambient music and speak the latest Guardian h
 
 Only tested in Chrome (obviously)
 
-Running here: revdancatt.github.com/GuardianAmbientHeadlineRadio
+Running here: http://revdancatt.github.com/GuardianAmbientHeadlineRadio
 
 But
 ---
