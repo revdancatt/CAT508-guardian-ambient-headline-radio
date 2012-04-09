@@ -116,6 +116,9 @@ control = {
     var hl = $('<a>').attr('href', control.radioQueue[0].webUrl).html(control.radioQueue[0].headline);
     $('#headline').empty().append(hl);
     
+    //  say is, as a test
+    speak(control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
+
     //  first we have to load the image
     aesthetic.loadimage();
 
