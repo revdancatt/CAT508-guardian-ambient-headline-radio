@@ -56,6 +56,11 @@ function speak(text, args) {
     }
 
     document.getElementById("audio").innerHTML=("<audio id=\"player\" src=\"data:audio/x-wav;base64,"+encode64(wav)+"\">");
+    try {
+      document.getElementById("player").addEventListener('ended', function() {radio.speakEnded();});
+    } catch(er) {
+      //  Ignore
+    }
     document.getElementById("player").play();
   }
 

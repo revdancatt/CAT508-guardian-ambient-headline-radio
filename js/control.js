@@ -15,6 +15,9 @@ control = {
     //  Stop the user from moving the page around on iDevices
     $(document).bind('touchstart', function(e) {e.preventDefault();});
     
+    //  Start up the radio part
+    radio.init();
+
     //  Whenever the use resized the window we need to redraw the canvas because we
     //  can't just simply set it at 100% and be done with it. *But* don't do it
     //  each time we resize only when the user has probably stopped
@@ -125,15 +128,14 @@ control = {
 
     //  TODO: Once the music has had a chance to lower the volumn we queue up the
     //  text-to-speech part
-    speak(control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
-    utils.log('finished speaking');
+    radio.say(control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
 
     //  TODO: although we do this somewhere else, once the text-to-speach has finished
     //  then we raise the music back up, and say that we've finished broadcasting so
     //  we're clear for the next broadcast.
     //  ALTHOUGH: we'll actually turn off the broadcasting in whichever function is raising
     //  the music volume
-    control.finishBroadcast();
+    //control.finishBroadcast();
 
 
   },
@@ -147,6 +149,7 @@ control = {
 
     //  Ok, we're not broadcasting any more, the queue is clear for the next one.
     control.broadcasting = false;
+    utils.log('all done');
 
   }
 
