@@ -46,7 +46,18 @@ img#holder {
     font-size: 10px;
 }
 
-#headline a {
+#about {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+    padding: 2px 4px;
+    font-size: 10px;
+}
+
+#headline a,
+#about a {
     text-decoration: none;
     color: black;
 }
