@@ -7,6 +7,11 @@ Only tested in Chrome (obviously)
 
 Running here: http://revdancatt.github.com/GuardianAmbientHeadlineRadio
 
+NOTE
+----
+
+Still not *really* using ambient music yet
+
 But
 ---
 
@@ -21,6 +26,7 @@ Done
 
 1. Add tiny headline at the bottom just to aplease people who wanted to be able to click thru from the image to the story
 2. Added first pass at the text-to-speech
+3. Added some music, but the WRONG KIND!
 
 Next
 ----
