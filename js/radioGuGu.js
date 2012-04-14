@@ -7,21 +7,6 @@ radio = {
 
     init: function() {
         utils.log('ready');
-
-        soundManager.url = 'swf/';      //  Path to the swfs
-        soundManager.debugMode = false; //  Debug, no thanks!
-        soundManager.onload = function() {
-            soundManager.createSound('leftbank','snd/leftbank.mp3');
-            radio.loopSound('leftbank');
-        };
-
-    },
-
-    loopSound: function(soundId) {
-        window.setTimeout(function() {
-            soundManager.play(soundId,{onfinish:function(){radio.loopSound(soundId);}});
-        },1);
-
     },
 
     fadeSound: function(soundId, targetVolume, step) {
@@ -32,7 +17,8 @@ radio = {
         } else {
             radio.currentVolume++;
         }
-        soundManager.setVolume(soundId, radio.currentVolume);
+        
+        $('#background1').get(0).volume=(radio.currentVolume/100);
 
         //  if we have reached the targetVolume then we are done
         if (radio.currentVolume == targetVolume) {
