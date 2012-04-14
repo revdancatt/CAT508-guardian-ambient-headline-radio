@@ -6,7 +6,7 @@ radio = {
     saying: null,
 
     init: function() {
-        utils.log('ready');
+        //utils.log('ready');
     },
 
     fadeSound: function(soundId, targetVolume, step) {
