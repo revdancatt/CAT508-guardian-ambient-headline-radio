@@ -11,9 +11,6 @@ control = {
 
     //  Set the tiles across size, directly because I'm a hack
     aesthetic.tilesAcross = 20;
-
-    //  Stop the user from moving the page around on iDevices
-    $(document).bind('touchstart', function(e) {e.preventDefault();});
     
     //  Start up the radio part
     radio.init();
@@ -30,6 +27,7 @@ control = {
       $('#closeheadlinebutton').fadeOut('fast');
       $('#headline').fadeOut('slow');
       $('#headlinesmall').removeClass('hideMe');
+      utils.log('clicked');
     });
 
     //  Go get the lates headline from the Guardian
@@ -37,6 +35,9 @@ control = {
 
     //  and do it once a minute from now on
     setInterval(function() {control.getLatestHeadline();}, 60000);
+
+    //  Stop the user from moving the page around on iDevices
+    $(document).bind('touchstart', function(e) {e.preventDefault();});
 
   },
 
