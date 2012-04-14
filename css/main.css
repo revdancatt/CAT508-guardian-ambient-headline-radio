@@ -12,12 +12,20 @@ body {
     display: none;
 }
 
+.player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+}
+
 #targetHolder {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    z-index: 1000;
 }
 
 img#holder {
@@ -31,6 +39,7 @@ img#holder {
     height: 100%;
     margin: 0;
     padding: 0;
+    z-index: 1000;
 }
 
 #debug {
