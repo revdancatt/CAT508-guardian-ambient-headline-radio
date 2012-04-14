@@ -7,7 +7,7 @@ radio = {
 
     init: function() {
         utils.log('ready');
-        $('#background1').get(0).play();
+        radio.checkPlaying();
     },
 
     fadeSound: function(soundId, targetVolume, step) {
@@ -55,6 +55,19 @@ radio = {
 
         this.saying = null;
         radio.fadeSound('leftbank', 100, 2000/Math.abs(radio.currentVolume - 100));
+
+    },
+
+    checkPlaying: function() {
+
+        $('#headline').html($('#background1').get(0).currentTime);
+
+        if ($('#background1').get(0).currentTime === 0) {
+            $('#background1').get(0).play();
+        } else {
+            //setTimeout(function() {radio.checkPlaying();}, 100);
+        }
+        setTimeout(function() {radio.checkPlaying();}, 100);
 
     }
 
