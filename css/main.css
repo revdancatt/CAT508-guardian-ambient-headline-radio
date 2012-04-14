@@ -4,6 +4,10 @@ body {
     overflow: hidden;
 }
 
+.hideMe {
+    display: none;
+}
+
 #hiddenStuff {
     display: none;
 }
@@ -36,7 +40,30 @@ img#holder {
     display: none;
 }
 
-#headline {
+#closeheadline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5%;
+    height: 5%;
+    font-family: 'Press Start 2P', monospace;
+}
+
+#closeheadlinebutton {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0;
+    padding-left: 4px;
+    padding-right: 2px;
+    padding-bottom: 2px;
+    color: #000099;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#headlinesmall {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -44,6 +71,79 @@ img#holder {
     font-family: monospace;
     padding: 2px 4px;
     font-size: 10px;
+}
+
+#headline {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-family: monospace;
+    padding: 2px 4px;
+    font-size: 72px;
+    font-family: 'Press Start 2P', monospace;
+    margin-right: 5%;
+    text-shadow: 16px 16px rgba(255, 255, 255, 0.2), 12px 12px rgba(255, 255, 255, 0.4), 8px 8px rgba(255, 255, 255, 0.6), 4px 4px rgba(255, 255, 255, 0.8);
+    line-height: 1.2em;
+}
+
+@media screen and (max-width: 400px) {
+    #closeheadlinebutton {
+        font-size: 0.5em;
+    }
+    #headline {
+        font-size: 18px;
+        text-shadow: 4px 4px rgba(255, 255, 255, 0.2), 3px 3px rgba(255, 255, 255, 0.4), 2px 2px rgba(255, 255, 255, 0.6), 1px 1px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@media screen and (min-width: 401px) {
+    #closeheadlinebutton {
+        font-size: 0.6em;
+    }
+    #headline {
+        font-size: 24px;
+        text-shadow: 8px 8px rgba(255, 255, 255, 0.2), 6px 6px rgba(255, 255, 255, 0.4), 4px 4px rgba(255, 255, 255, 0.6), 2px 2px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@media screen and (min-width: 640px) {
+    #closeheadlinebutton {
+        font-size: 0.7em;
+    }
+    #headline {
+        font-size: 36px;
+        text-shadow: 12px 12px rgba(255, 255, 255, 0.2), 9px 9px rgba(255, 255, 255, 0.4), 6px 6px rgba(255, 255, 255, 0.6), 3px 3px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@media screen and (min-width: 880px) {
+    #closeheadlinebutton {
+        font-size: 0.8em;
+    }
+    #headline {
+        font-size: 48px;
+        text-shadow: 16px 16px rgba(255, 255, 255, 0.2), 12px 12px rgba(255, 255, 255, 0.4), 8px 8px rgba(255, 255, 255, 0.6), 4px 4px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@media screen and (min-width: 1120px) {
+    #closeheadlinebutton {
+        font-size: 0.9em;
+    }
+    #headline {
+        font-size: 60px;
+        text-shadow: 16px 16px rgba(255, 255, 255, 0.2), 12px 12px rgba(255, 255, 255, 0.4), 8px 8px rgba(255, 255, 255, 0.6), 4px 4px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@media screen and (min-width: 1350px) {
+    #closeheadlinebutton {
+        font-size: 1em;
+    }
+    #headline {
+        font-size: 72px;
+    text-shadow: 16px 16px rgba(255, 255, 255, 0.2), 12px 12px rgba(255, 255, 255, 0.4), 8px 8px rgba(255, 255, 255, 0.6), 4px 4px rgba(255, 255, 255, 0.8);
+    }
 }
 
 #about {
@@ -56,7 +156,12 @@ img#holder {
     font-size: 10px;
 }
 
-#headline a,
+#headline a {
+    text-decoration: none;
+    color: #0000FF;
+}
+
+#headlinesmall a,
 #about a {
     text-decoration: none;
     color: black;

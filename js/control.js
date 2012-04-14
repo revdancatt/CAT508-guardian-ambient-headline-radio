@@ -25,6 +25,13 @@ control = {
       control.windowResize = setTimeout( function() { aesthetic.renderTiles(); }, 500);
     });
 
+    //  allow us to turn the headline off
+    $('#closeheadlinebutton').click( function() {
+      $('#closeheadlinebutton').fadeOut('fast');
+      $('#headline').fadeOut('slow');
+      $('#headlinesmall').removeClass('hideMe');
+    });
+
     //  Go get the lates headline from the Guardian
     control.getLatestHeadline();
 
@@ -117,7 +124,9 @@ control = {
     //  I'll move this out to someplace else when we're actually doing the headline display
     //  properly
     var hl = $('<a>').attr('href', control.radioQueue[0].webUrl).html(control.radioQueue[0].headline);
+    var h2 = $('<a>').attr('href', control.radioQueue[0].webUrl).html(control.radioQueue[0].headline);
     $('#headline').empty().append(hl);
+    $('#headlinesmall').empty().append(h2);
     
 
     //  first we have to load the image
