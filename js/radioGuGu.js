@@ -7,8 +7,19 @@ radio = {
 
     init: function() {
         utils.log('ready');
-        radio.checkPlaying();
+
+        var myAudio = document.getElementById("background1");
+        myAudio.addEventListener('ended', radio.loopAudio, false);
+        myAudio.play();
+ 
+        //       radio.checkPlaying();
     },
+
+    loopAudio: function() {
+        var myAudio = document.getElementById("background1");
+        myAudio.play();
+    },
+
 
     fadeSound: function(soundId, targetVolume, step) {
 
