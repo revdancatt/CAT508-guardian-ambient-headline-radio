@@ -27,7 +27,8 @@ control = {
       $('#closeheadlinebutton').fadeOut('fast');
       $('#headline').fadeOut('slow');
       $('#headlinesmall').removeClass('hideMe');
-      utils.log('clicked');
+      $('#background1').get(0).play();
+      utils.log('clicked, play');
     });
 
     //  Go get the lates headline from the Guardian
