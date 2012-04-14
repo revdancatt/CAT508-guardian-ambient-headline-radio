@@ -8,16 +8,7 @@ radio = {
     init: function() {
         utils.log('ready');
 
-        var myAudio = document.getElementById("background1");
-        myAudio.addEventListener('ended', radio.loopAudio, false);
-        myAudio.play();
- 
-        //       radio.checkPlaying();
-    },
-
-    loopAudio: function() {
-        var myAudio = document.getElementById("background1");
-        myAudio.play();
+       radio.checkPlaying();
     },
 
 
@@ -77,9 +68,10 @@ radio = {
         if ($('#background1').get(0).currentTime === 0) {
             $('#background1').get(0).play();
             msg += ' : sent play instruction : ' + Math.random();
+            document.location = "javascript:$('#background1').get(0).play();";
         } else {
             //setTimeout(function() {radio.checkPlaying();}, 100);
-            msg += ' : Math' + Math.random();
+            msg += ' : Playing' + Math.random();
         }
         $('#headline').html(msg);
         setTimeout(function() {radio.checkPlaying();}, 100);
