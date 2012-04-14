@@ -37,7 +37,7 @@ control = {
     setInterval(function() {control.getLatestHeadline();}, 60000);
 
     //  Stop the user from moving the page around on iDevices
-    $(document).bind('touchstart', function(e) {e.preventDefault();});
+    //$(document).bind('touchstart', function(e) {e.preventDefault();});
 
   },
 
