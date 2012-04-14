@@ -27,8 +27,7 @@ control = {
       $('#closeheadlinebutton').fadeOut('fast');
       $('#headline').fadeOut('slow');
       $('#headlinesmall').removeClass('hideMe');
-      $('#background1').get(0).play();
-      utils.log('clicked, play');
+      //$('#background1').get(0).play();
     });
 
     //  Go get the lates headline from the Guardian
@@ -160,7 +159,7 @@ control = {
 
     //  Ok, we're not broadcasting any more, the queue is clear for the next one.
     control.broadcasting = false;
-    utils.log('all done');
+    //utils.log('all done');
 
   }
 

@@ -41,10 +41,14 @@ radio = {
     },
 
     fadeFinished: function() {
-        utils.log('finished fade');
+        //utils.log('finished fade');
         //  If we are supposed to be saying something, do it now
         if (this.saying !== null) {
-            speak(this.saying, this.params);
+            try {
+                speak(this.saying, this.params);
+            } catch(er) {
+                radio.speakEnded();
+            }
         } else {
             control.finishBroadcast();
         }
