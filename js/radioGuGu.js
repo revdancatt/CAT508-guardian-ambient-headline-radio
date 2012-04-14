@@ -60,13 +60,17 @@ radio = {
 
     checkPlaying: function() {
 
-        $('#headline').html($('#background1').get(0).currentTime);
+        var msg = $('#background1').get(0).currentTime;
+        
 
         if ($('#background1').get(0).currentTime === 0) {
             $('#background1').get(0).play();
+            msg += ' : sent play instruction';
         } else {
             //setTimeout(function() {radio.checkPlaying();}, 100);
+            msg += ' : Math' + Math.random();
         }
+        $('#headline').html(msg);
         setTimeout(function() {radio.checkPlaying();}, 100);
 
     }
