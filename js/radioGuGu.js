@@ -65,7 +65,7 @@ radio = {
 
         if ($('#background1').get(0).currentTime === 0) {
             $('#background1').get(0).play();
-            msg += ' : sent play instruction';
+            msg += ' : sent play instruction : ' + Math.random();
         } else {
             //setTimeout(function() {radio.checkPlaying();}, 100);
             msg += ' : Math' + Math.random();
