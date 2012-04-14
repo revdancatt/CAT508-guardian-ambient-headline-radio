@@ -7,6 +7,7 @@ radio = {
 
     init: function() {
         utils.log('ready');
+        $('#background1').get(0).play();
     },
 
     fadeSound: function(soundId, targetVolume, step) {
