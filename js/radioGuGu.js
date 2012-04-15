@@ -5,6 +5,7 @@ radio = {
     targetVolume: 40,
     saying: null,
     birdsCount: 1,
+    isJingle: false,
 
     init: function() {
         //utils.log('ready');
@@ -18,6 +19,9 @@ radio = {
 
 
         }, 1000);
+
+        $('#jingle').get(0).volume=0;
+
     },
 
     fadeSound: function(targetVolume, step) {
@@ -30,6 +34,9 @@ radio = {
         }
         
         $('#drone').get(0).volume=(radio.currentVolume/100);
+        if (radio.isJingle) {
+            $('#jingle').get(0).volume=(1-(radio.currentVolume/100))/4;
+        }
 
         //  if we have reached the targetVolume then we are done
         if (radio.currentVolume == targetVolume) {
@@ -47,7 +54,13 @@ radio = {
 
     say: function(msg, params) {
         this.saying = msg;
-        this.sayingParams = params;
+
+        this.isJingle = false;
+        if ('is' in params && params.is == 'jingle') {
+            this.isJingle = true;
+        } else {
+            this.sayingParams = params;
+        }
         radio.fadeSound(20, 2000/Math.abs(radio.currentVolume - 20));
     },
 
@@ -56,7 +69,8 @@ radio = {
         //  If we are supposed to be saying something, do it now
         if (this.saying !== null) {
             try {
-                speak(this.saying, this.params);
+                $('#HiDeHi').get(0).play();
+                setTimeout(function() {speak(radio.saying, radio.params);}, 2500);
             } catch(er) {
                 radio.speakEnded();
             }

@@ -128,7 +128,7 @@ control = {
 
       //  if it's been 5 minutes, then we'll push out a headline
       if (control.noNewHeadlinesCount >= 7) {
-        radio.say('Guardian Ambient Headline Radio, broadcasting 24 hours a day');
+        radio.say('Guardian Ambient Headline Radio, broadcasting 24 hours a day', {'is': 'jingle'});
         control.noNewHeadlinesCount = 0;
       }
 
@@ -187,6 +187,7 @@ control = {
 
     //  Ok, we're not broadcasting any more, the queue is clear for the next one.
     control.broadcasting = false;
+    radio.isJingle = false;
     //utils.log('all done');
 
   }
