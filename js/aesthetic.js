@@ -4,6 +4,7 @@ aesthetic = {
   tileMap: null,
   tileObj: null,
   tilesAcross: 20,
+  destroyImageTmr: null,
 
 
   //  This function loads in the thumbnail image, sadly because the Guardian doesn't have CORS
@@ -350,6 +351,11 @@ aesthetic = {
     } catch(er) {
       // Ignore
     }
+
+  },
+
+  //  This function will start destroying the background image
+  destroyImage: function() {
 
   },
 

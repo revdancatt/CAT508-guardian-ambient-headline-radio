@@ -12,6 +12,11 @@ radio = {
             var d = new Date();
             var v = Math.sin(d.getTime()/25000)/2+0.5;
             $('#birds').get(0).volume=v;
+
+            v = Math.sin(d.getTime()/32127)/2+0.5;
+            $('#rain').get(0).volume=v*0.8;
+
+
         }, 1000);
     },
 
@@ -25,7 +30,6 @@ radio = {
         }
         
         $('#drone').get(0).volume=(radio.currentVolume/100);
-        $('#rain').get(0).volume=(radio.currentVolume/100*0.8);
 
         //  if we have reached the targetVolume then we are done
         if (radio.currentVolume == targetVolume) {

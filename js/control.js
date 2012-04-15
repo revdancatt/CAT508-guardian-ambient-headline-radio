@@ -6,6 +6,7 @@ control = {
   broadcasting: false,
   pageSize: 10,
   windowResize: null,
+  noNewHeadlinesCount: 0,
   
   init: function() {
 
@@ -113,13 +114,40 @@ control = {
     if (control.broadcasting) return;
 
     //  see if there's anything to broadcast
-    if (control.radioQueue.length === 0) return;
+    //  if not then increase the noNewHeadlinesCounter,
+    //  if it gets to 5 mins then we'll say a random
+    //  ident!
+    if (control.radioQueue.length === 0) {
+      control.noNewHeadlinesCount++;
+
+      //  If this is a whole MINUTE since we last updated then we'll start destroying the
+      //  background image
+      if (control.noNewHeadlinesCount == 1) {
+        aesthetic.destroyImageTmr = setInterval(function() {aesthetic.destroyImage();}, 200);
+      }
+
+      //  if it's been 5 minutes, then we'll push out a headline
+      if (control.noNewHeadlinesCount >= 7) {
+        radio.say('Guardian Ambient Headline Radio, broadcasting 24 hours a day');
+        control.noNewHeadlinesCount = 0;
+      }
+
+      return;
+
+    }
 
     //  We got here, that means there's something to do. Mark us as broadcasting, we we don't do
     //  anything else until we've finished. Note, once we've finished we don't need to check the
     //  queue again, as the getLatestHeadline will run once a minute anyway and always check the
     //  broadcast queue at the end.
     control.broadcasting = true;
+
+    //  We need to stop destroying an image if we are doing so (although this will happen anyway
+    //  because it will detect that we are now broadcasting)
+    clearTimeout(aesthetic.destroyImageTmr);
+
+    //  set the noNewHEadlinesCount back to zero
+    control.noNewHeadlinesCount = 0;
 
     //  QUICK HACK: set the headline and link,
     //  I'll move this out to someplace else when we're actually doing the headline display
@@ -138,7 +166,7 @@ control = {
 
     //  TODO: Once the music has had a chance to lower the volumn we queue up the
     //  text-to-speech part
-    radio.say(control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
+    radio.say(control.radioQueue[0].sectionName + '. ' + control.radioQueue[0].headline, {amplitude: 100, pitch: 50, speed: 145, wordgap: 3});
 
     //  TODO: although we do this somewhere else, once the text-to-speach has finished
     //  then we raise the music back up, and say that we've finished broadcasting so
