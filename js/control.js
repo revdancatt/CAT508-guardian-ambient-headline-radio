@@ -128,7 +128,7 @@ control = {
 
       //  if it's been 5 minutes, then we'll push out a headline
       if (control.noNewHeadlinesCount >= 7) {
-        radio.say('Guardian Ambient Headline Radio, broadcasting 24 hours a day', {'is': 'jingle'});
+        radio.say('Guardian Ambient Headline Radio, broadcasting 24 hours a day. Share and enjoy.', {'is': 'jingle'});
         control.noNewHeadlinesCount = 0;
       }
 

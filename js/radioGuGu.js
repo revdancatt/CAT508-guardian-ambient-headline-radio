@@ -69,8 +69,12 @@ radio = {
         //  If we are supposed to be saying something, do it now
         if (this.saying !== null) {
             try {
-                $('#HiDeHi').get(0).play();
-                setTimeout(function() {speak(radio.saying, radio.params);}, 2500);
+                if (this.isJingle) {
+                    speak(radio.saying, radio.params);
+                } else {
+                    $('#HiDeHi').get(0).play();
+                    setTimeout(function() {speak(radio.saying, radio.params);}, 2500);
+                }
             } catch(er) {
                 radio.speakEnded();
             }
@@ -82,7 +86,11 @@ radio = {
     speakEnded: function() {
 
         this.saying = null;
-        radio.fadeSound(100, 2000/Math.abs(radio.currentVolume - 100));
+        if (this.isJingle) {
+            setTimeout(function() {radio.fadeSound(100, 2000/Math.abs(radio.currentVolume - 100));}, 2000);
+        } else {
+            radio.fadeSound(100, 2000/Math.abs(radio.currentVolume - 100));
+        }
 
     }
 
