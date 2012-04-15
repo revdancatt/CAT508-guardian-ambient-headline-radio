@@ -123,7 +123,7 @@ control = {
       //  If this is a whole MINUTE since we last updated then we'll start destroying the
       //  background image
       if (control.noNewHeadlinesCount == 1) {
-        aesthetic.destroyImageTmr = setInterval(function() {aesthetic.destroyImage();}, 200);
+        aesthetic.destroyImageTmr = setInterval(function() {aesthetic.destroyImage();}, 1000);
       }
 
       //  if it's been 5 minutes, then we'll push out a headline
