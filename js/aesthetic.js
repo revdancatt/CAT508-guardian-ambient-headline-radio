@@ -352,7 +352,7 @@ aesthetic = {
       ct=$('#targetCanvas')[0];
       Pixastic.process(ct, "noise", {mono:true,amount:0.01,strength:0.05});
       ct=$('#targetCanvas')[0];
-      Pixastic.process(ct, "blurfast", {amount:0.1});
+      Pixastic.process(ct, "blurfast", {amount:0.04});
     } catch(er) {
       // Ignore
     }

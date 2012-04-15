@@ -122,7 +122,7 @@ control = {
 
       //  If this is a whole MINUTE since we last updated then we'll start destroying the
       //  background image
-      if (control.noNewHeadlinesCount == 1) {
+      if (control.noNewHeadlinesCount == 2) {
         aesthetic.destroyImageTmr = setInterval(function() {aesthetic.destroyImage();}, 1000);
       }
 
