@@ -345,6 +345,11 @@ aesthetic = {
   //  This function will start destroying the background image
   destroyImage: function() {
 
+    if (control.broadcasting) {
+      clearTimeout(aesthetic.destroyImageTmr);
+      return;
+    }
+    
     //  If I *were* to use Pixastic, this is where I'd do it
     try {
       ct=$('#targetCanvas')[0];
