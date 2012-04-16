@@ -24,6 +24,7 @@ radio = {
 
     },
 
+
     fadeSound: function(targetVolume, step) {
 
         //  decrease the current volume
@@ -52,17 +53,23 @@ radio = {
 
     },
 
+
     say: function(msg, params) {
         this.saying = msg;
 
         this.isJingle = false;
         if ('is' in params && params.is == 'jingle') {
             this.isJingle = true;
+            //  set the volume and start playing the jingle
+            $('#jingle').get(0).volume=0;
+            $('#jingle').get(0).play();
         } else {
             this.sayingParams = params;
         }
+
         radio.fadeSound(20, 2000/Math.abs(radio.currentVolume - 20));
     },
+
 
     fadeFinished: function() {
         //utils.log('finished fade');
@@ -82,6 +89,7 @@ radio = {
             control.finishBroadcast();
         }
     },
+
 
     speakEnded: function() {
 
