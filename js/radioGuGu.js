@@ -80,13 +80,21 @@ radio = {
                     speak(radio.saying, radio.params);
                 } else {
                     $('#HiDeHi').get(0).play();
-                    setTimeout(function() {speak(radio.saying, radio.params);}, 2500);
+                    setTimeout(function() {radio.speakLater();}, 2500);
                 }
             } catch(er) {
                 radio.speakEnded();
             }
         } else {
             control.finishBroadcast();
+        }
+    },
+
+    speakLater: function() {
+        try {
+            speak(radio.saying, radio.params);
+        } catch(er) {
+            radio.speakEnded();
         }
     },
 
