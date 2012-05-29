@@ -22,11 +22,15 @@ function speak(text, args) {
     }
     if (readInt(20, 2) != 1) throw 'Invalid compression code, not PCM';
     if (readInt(22, 2) != 1) throw 'Invalid number of channels, not 1';
-    return {
-      sampleRate: readInt(24, 4),
-      bitsPerSample: readInt(34, 2),
-      samples: wav.subarray(44)
-    };
+    try {
+      return {
+        sampleRate: readInt(24, 4),
+        bitsPerSample: readInt(34, 2),
+        samples: wav.subarray(44)
+      };
+    } catch(er) {
+      return 0;
+    }
   }
 
   function playHTMLAudioElement(wav) {
@@ -99,12 +103,19 @@ function speak(text, args) {
     handleWav(wav);
   } else {
     // Call the worker, which will return a wav that we then play
+    console.log(9);
     var startTime = Date.now();
+    console.log(10);
     speakWorker.onmessage = function(event) {
+      console.log(11);
       if (PROFILE) console.log('speak.js: worker processing took ' + (Date.now()-startTime).toFixed(2) + ' ms');
+      console.log(12);
       handleWav(event.data);
+      console.log(13);
     };
+    console.log(14);
     speakWorker.postMessage({ text: text, args: args });
+    console.log(15);
   }
 }
 
