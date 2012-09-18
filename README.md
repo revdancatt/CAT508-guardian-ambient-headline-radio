@@ -6,7 +6,7 @@ An attempt to make javascript play ambient music and speak the latest Guardian h
 Only tested in Chrome & Firefox
 Doesn't seem to work in Safari, not tested in IE
 
-Running here: http://revdancatt.github.com/GuardianAmbientHeadlineRadio
+Running here: http://revdancatt.github.com/project-0016-guardian-ambient-headline-radio/
 
 The page polls the Guardian Content API for the latest headlines, if it sees one it hasn't spotted before then it "announces" it and changes the background image.
 
