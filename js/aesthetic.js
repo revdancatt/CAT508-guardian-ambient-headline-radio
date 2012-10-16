@@ -34,7 +34,7 @@ aesthetic = {
     //  the remote server is set up to prepend the Guardian URL onto the
     //  thumbnail value so it can't just be used to load in images from
     //  wherever anyone fancies :)
-    $.getJSON("http://gu-tools-v3.appspot.com/img_to_json?img=" + thumb + "&callback=?",
+    $.getJSON("http://guardianimagetodata.appspot.com/img_to_json?img=" + thumb + "&callback=?",
       
       //  TODO: add error checking to this response
       function(json) {
