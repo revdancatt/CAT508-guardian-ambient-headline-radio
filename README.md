@@ -14,3 +14,5 @@ NOTES
 -----
 
 You can read notes about the background image stuff here: http://revdancatt.com/2012/03/31/the-pxl-effect-with-javascript-and-canvas-and-maths/
+
+And the definitive blogpost is here: http://revdancatt.com/2012/04/25/guardian-ambient-headline-radio-the-definitive-blogpost/
