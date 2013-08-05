@@ -1,7 +1,7 @@
 ![Screen Shot](http://cattopus23.com/img/panel-CAT508.png)
 
-Conversion of the Guardian ambient radio station to Javascript
-==============================================================
+CAT508 Conversion of the Guardian ambient radio station to Javascript
+=====================================================================
 
 An attempt to make javascript play ambient music and speak the latest Guardian headlines.
 
